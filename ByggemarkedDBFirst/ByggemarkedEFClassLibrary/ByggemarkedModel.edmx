@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ByggemarkedModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bookinger">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPris" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="PeriodeStart" Type="date" Nullable="false" />
+          <Property Name="PeriodeSlut" Type="date" Nullable="false" />
+          <Property Name="KundeId" Type="int" Nullable="false" />
+          <Property Name="VaerktoejId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kunder">
+          <Key>
+            <PropertyRef Name="KundeId" />
+          </Key>
+          <Property Name="KundeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Navn" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adresse" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vaerktoej">
+          <Key>
+            <PropertyRef Name="VaerktoejId" />
+          </Key>
+          <Property Name="VaerktoejId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Antal" Type="int" Nullable="false" />
+          <Property Name="DoegnPris" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="Depositum" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bookinger_To_Kunde">
+          <End Role="Kunder" Type="Self.Kunder" Multiplicity="1" />
+          <End Role="Bookinger" Type="Self.Bookinger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunder">
+              <PropertyRef Name="KundeId" />
+            </Principal>
+            <Dependent Role="Bookinger">
+              <PropertyRef Name="KundeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bookinger_To_Vaerktoej">
+          <End Role="Vaerktoej" Type="Self.Vaerktoej" Multiplicity="1" />
+          <End Role="Bookinger" Type="Self.Bookinger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaerktoej">
+              <PropertyRef Name="VaerktoejId" />
+            </Principal>
+            <Dependent Role="Bookinger">
+              <PropertyRef Name="VaerktoejId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ByggemarkedModelStoreContainer">
+          <EntitySet Name="Bookinger" EntityType="Self.Bookinger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kunder" EntityType="Self.Kunder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vaerktoej" EntityType="Self.Vaerktoej" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bookinger_To_Kunde" Association="Self.FK_Bookinger_To_Kunde">
+            <End Role="Kunder" EntitySet="Kunder" />
+            <End Role="Bookinger" EntitySet="Bookinger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bookinger_To_Vaerktoej" Association="Self.FK_Bookinger_To_Vaerktoej">
+            <End Role="Vaerktoej" EntitySet="Vaerktoej" />
+            <End Role="Bookinger" EntitySet="Bookinger" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ByggemarkedModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bookinger">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalPris" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="PeriodeStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PeriodeSlut" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="KundeId" Type="Int32" Nullable="false" />
+          <Property Name="VaerktoejId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kunder" Relationship="Self.FK_Bookinger_To_Kunde" FromRole="Bookinger" ToRole="Kunder" />
+          <NavigationProperty Name="Vaerktoej" Relationship="Self.FK_Bookinger_To_Vaerktoej" FromRole="Bookinger" ToRole="Vaerktoej" />
+        </EntityType>
+        <EntityType Name="Kunder">
+          <Key>
+            <PropertyRef Name="KundeId" />
+          </Key>
+          <Property Name="KundeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Navn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bookinger" Relationship="Self.FK_Bookinger_To_Kunde" FromRole="Kunder" ToRole="Bookinger" />
+        </EntityType>
+        <EntityType Name="Vaerktoej">
+          <Key>
+            <PropertyRef Name="VaerktoejId" />
+          </Key>
+          <Property Name="VaerktoejId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Antal" Type="Int32" Nullable="false" />
+          <Property Name="DoegnPris" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="Depositum" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Bookinger" Relationship="Self.FK_Bookinger_To_Vaerktoej" FromRole="Vaerktoej" ToRole="Bookinger" />
+        </EntityType>
+        <Association Name="FK_Bookinger_To_Kunde">
+          <End Role="Kunder" Type="Self.Kunder" Multiplicity="1" />
+          <End Role="Bookinger" Type="Self.Bookinger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunder">
+              <PropertyRef Name="KundeId" />
+            </Principal>
+            <Dependent Role="Bookinger">
+              <PropertyRef Name="KundeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bookinger_To_Vaerktoej">
+          <End Role="Vaerktoej" Type="Self.Vaerktoej" Multiplicity="1" />
+          <End Role="Bookinger" Type="Self.Bookinger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaerktoej">
+              <PropertyRef Name="VaerktoejId" />
+            </Principal>
+            <Dependent Role="Bookinger">
+              <PropertyRef Name="VaerktoejId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ByggemarkedEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookinger" EntityType="Self.Bookinger" />
+          <EntitySet Name="Kunder" EntityType="Self.Kunder" />
+          <EntitySet Name="Vaerktoej" EntityType="Self.Vaerktoej" />
+          <AssociationSet Name="FK_Bookinger_To_Kunde" Association="Self.FK_Bookinger_To_Kunde">
+            <End Role="Kunder" EntitySet="Kunder" />
+            <End Role="Bookinger" EntitySet="Bookinger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bookinger_To_Vaerktoej" Association="Self.FK_Bookinger_To_Vaerktoej">
+            <End Role="Vaerktoej" EntitySet="Vaerktoej" />
+            <End Role="Bookinger" EntitySet="Bookinger" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ByggemarkedModelStoreContainer" CdmEntityContainer="ByggemarkedEntities">
+          <EntitySetMapping Name="Bookinger">
+            <EntityTypeMapping TypeName="ByggemarkedModel.Bookinger">
+              <MappingFragment StoreEntitySet="Bookinger">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalPris" ColumnName="TotalPris" />
+                <ScalarProperty Name="PeriodeStart" ColumnName="PeriodeStart" />
+                <ScalarProperty Name="PeriodeSlut" ColumnName="PeriodeSlut" />
+                <ScalarProperty Name="KundeId" ColumnName="KundeId" />
+                <ScalarProperty Name="VaerktoejId" ColumnName="VaerktoejId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kunder">
+            <EntityTypeMapping TypeName="ByggemarkedModel.Kunder">
+              <MappingFragment StoreEntitySet="Kunder">
+                <ScalarProperty Name="KundeId" ColumnName="KundeId" />
+                <ScalarProperty Name="Navn" ColumnName="Navn" />
+                <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vaerktoej">
+            <EntityTypeMapping TypeName="ByggemarkedModel.Vaerktoej">
+              <MappingFragment StoreEntitySet="Vaerktoej">
+                <ScalarProperty Name="VaerktoejId" ColumnName="VaerktoejId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Antal" ColumnName="Antal" />
+                <ScalarProperty Name="DoegnPris" ColumnName="DoegnPris" />
+                <ScalarProperty Name="Depositum" ColumnName="Depositum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
