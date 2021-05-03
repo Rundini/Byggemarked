@@ -1,0 +1,92 @@
+﻿@model ByggemarkedEFClassLibrary.Kunder
+
+@{
+    ViewBag.Title = "Kundeinfo";
+}
+
+<h2>KUNDE INFORMATION</h2>
+
+<div>
+    @Html.ActionLink("Afslut", "Exit")
+    <h4>@Html.DisplayFor(model => model.Navn)  |  @Html.ActionLink("Opret Booking", "GoToOpretBooking", new { id = Model.KundeId })</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adresse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adresse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        @Html.ActionLink("Opdatér kundeoplysninger", "Edit", new { id = Model.KundeId })
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Antal @Html.DisplayNameFor(model => model.Bookinger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bookinger.Count)
+        </dd>
+
+    </dl>
+
+</div>
+
+<h3>Bookinger:</h3>
+<table class="table">
+    <tr>
+        <th>
+            Status
+        </th>
+        <th>
+            TotalPris
+        </th>
+        <th>
+            PeriodeStart
+        </th>
+        <th>
+            PeriodeSlut
+        </th>
+        <th>
+            Type
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Bookinger)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPris)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodeStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodeSlut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vaerktoej.Type)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+
